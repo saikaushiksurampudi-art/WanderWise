@@ -1,0 +1,16 @@
+version: 1.0
+runtime: nodejs18
+build:
+  commands:
+    build:
+      # --include=dev is required: the build needs vite/esbuild, and App Runner
+      # may set NODE_ENV=production, which would otherwise skip devDependencies.
+      - npm ci --include=dev
+      - npm run build
+run:
+  command: npm start
+  network:
+    port: 3000
+  env:
+    - name: NODE_ENV
+      value: production
